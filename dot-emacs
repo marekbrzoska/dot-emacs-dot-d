@@ -1,0 +1,176 @@
+;; Tell emacs where is your personal elisp lib dir
+;; this is the dir you place all your extra packages
+(add-to-list 'load-path "~/.emacs.d/")
+
+;; Zapisuje zakładki po każdej 1 zmianie
+(setq bookmark-set-flag 1)
+
+;; Scala support
+(add-to-list 'load-path "/usr/share/scala/misc/scala-tool-support/emacs")
+(require 'scala-mode-auto)
+(add-to-list 'load-path "/home/mbr/Programs/ensime/ensime_2.9.2-SNAPSHOT-0.9.3.RC2/elisp")
+(require 'ensime)
+(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+
+(load "whole-line-or-region") 
+(whole-line-or-region-mode 1)
+
+
+;; Emacsowe przewijanie up/down ma znaczenie odwrotne do moich intuicji :)
+(defun scroll-up-in-place (n)
+  (interactive "p")
+  (scroll-down 1))
+(defun scroll-down-in-place (n)
+  (interactive "p")
+  (scroll-up 1))
+(defun scroll-up-10-lines (n)
+  (interactive "p")
+  (previous-line (* 10 n))
+  (scroll-down (* 10 n)))
+(defun scroll-down-10-lines (n)
+  (interactive "p")
+  (previous-line (* -10 n))
+  (scroll-up (* 10 n)))
+
+;; przewijanie tylko o jeden wiersz przy krawędzi ekranu (górnej lub dolnej) 
+(setq scroll-step            1
+      scroll-conservatively  10000)
+
+;; Translate the problematic keys to the function key Hyper:
+(keyboard-translate ?\C-i ?\H-i)
+(keyboard-translate ?\C-j ?\H-j)
+;; Rebind then accordantly: 
+(global-set-key [?\H-i] 'scroll-up-in-place)
+(global-set-key [?\H-j] 'scroll-down-in-place)
+(global-set-key [?\M-i] 'scroll-up-10-lines)
+(global-set-key [?\M-j] 'scroll-down-10-lines)
+
+
+
+
+(defun goto-match-paren (arg)
+  "Go to the matching parenthesis if on parenthesis. Else go to the
+opening parenthesis one level up."
+  (interactive "p")
+  (cond ((looking-at "\\s\(") (forward-list 1))
+        (t
+         (backward-char 1)
+         (cond ((looking-at "\\s\)")
+                (forward-char 1) (backward-list 1))
+               (t
+                (while (not (looking-at "\\s("))
+                  (backward-char 1)
+                  (cond ((looking-at "\\s\)")
+                         (message "->> )")
+                         (forward-char 1)
+                         (backward-list 1)
+                         (backward-char 1)))
+                  ))))))
+(global-set-key [?\C-%] 'goto-match-paren)
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(inhibit-startup-screen t))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
+
+
+;; Increment/decrement
+(require 'evil-numbers)
+(global-set-key (kbd "C-+") 'evil-numbers/inc-at-pt)
+(global-set-key (kbd "C--") 'evil-numbers/dec-at-pt)
+
+
+;; Auto complete
+(require 'auto-complete)
+(global-auto-complete-mode t)
+(define-key ac-complete-mode-map "\C-n" 'ac-next)
+(define-key ac-complete-mode-map "\C-p" 'ac-previous)
+(setq ac-auto-start nil)
+(global-set-key "\M-/" 'ac-start)
+;; (setq ac-auto-start 3)
+
+
+;; copy from line above
+ (defun insert-char-from-previous-line ()
+   "Copy previous line character by character"
+   (interactive)
+   (let ((curpoint (point))
+    (curcolumn (current-column)))
+      (forward-line -1)
+      (forward-char curcolumn)
+      (let ((char-above (following-char) ))
+      (goto-char curpoint)
+      (if (not (char-equal char-above ?\n ))
+     (insert char-above)))))
+(global-set-key (kbd "C-S-y") 'insert-char-from-previous-line)
+
+;; Original idea from
+;; http://www.opensubscriber.com/message/emacs-devel@gnu.org/10971693.html
+(defun comment-dwim-line (&optional arg)
+  "Replacement for the comment-dwim command.
+  If no region is selected and current line is not blank and we are not at the end of the line,
+  then comment current line.
+  Replaces default behaviour of comment-dwim, when it inserts comment at the end of the line."
+    (interactive "*P")
+    (comment-normalize-vars)
+    (if (and (not (region-active-p)) (not (looking-at "[ \t]*$")))
+        (comment-or-uncomment-region (line-beginning-position) (line-end-position))
+      (comment-dwim arg)))
+(global-set-key "\M-;" 'comment-dwim-line)
+(setq comment-empty-lines 1)
+
+
+;; wygodne przełączanie między buforami i otwieranie plików
+(require 'ido)
+(ido-mode t)
+
+
+;; nie lubię zawijanych wierszy
+(set-default 'truncate-lines t)
+
+
+;; fajniejszy status bar
+(setq mode-line-system-identification  
+  (substring (system-name) 0
+             (string-match "\\..+" (system-name))))
+(setq default-mode-line-format
+      (list ""
+            'mode-line-modified
+            "<"
+            'mode-line-system-identification
+            "> "
+            "%14b"
+            " "
+            'default-directory
+            " "
+            "%[(" 
+            'mode-name 
+            'minor-mode-alist 
+            "%n" 
+            'mode-line-process  
+            ")%]--" 
+             "Line %l--"
+            '(-3 . "%P")
+            "-%-"))
+;; Start with new default.
+(setq mode-line-format default-mode-line-format)
+
+;; do pythona
+
+(defun set-python-env () ""
+  (load "mbr-python")
+)
+(add-hook 'python-mode-hook 'set-python-env)
+
+
+
+;; Żeby flymake pokazywał błąd po ustawieniu kursora w odpowiednim wierszu a nie po najechaniu myszą
+(require 'flymake-cursor)
+
