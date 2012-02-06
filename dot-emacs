@@ -12,7 +12,7 @@
 (require 'ensime)
 (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 
-(load "whole-line-or-region") 
+(require 'whole-line-or-region) 
 (whole-line-or-region-mode 1)
 
 
