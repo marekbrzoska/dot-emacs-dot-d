@@ -174,3 +174,13 @@ opening parenthesis one level up."
 ;; Żeby flymake pokazywał błąd po ustawieniu kursora w odpowiednim wierszu a nie po najechaniu myszą
 (require 'flymake-cursor)
 
+;; scroll one line at a time (less "jumpy" than defaults)
+(setq mouse-wheel-scroll-amount '(3 ((shift) . 1))) ;; one line at a time
+(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+
+;; auto indent mode config
+(setq auto-indent-on-visit-file t) ;; If you want auto-indent on for files
+(setq auto-indent-key-for-end-of-line-then-newline "<M-return>")
+(require 'auto-indent-mode)
+(auto-indent-global-mode)
