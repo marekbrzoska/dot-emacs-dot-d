@@ -32,7 +32,7 @@
   (previous-line (* -10 n))
   (scroll-up (* 10 n)))
 
-;; przewijanie tylko o jeden wiersz przy krawędzi ekranu (górnej lub dolnej) 
+;; przewijanie tylko o jeden wiersz przy krawędzi ekranu (górnej lub dolnej)
 (setq scroll-step            1
       scroll-conservatively  10000)
 
@@ -179,11 +179,6 @@ opening parenthesis one level up."
 (setq mouse-wheel-scroll-amount '(3 ((shift) . 1))) ;; 3 line at a time
 (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
-
-;; auto indent mode config
-(setq auto-indent-key-for-end-of-line-then-newline "<M-return>")
-(require 'auto-indent-mode)
-;(auto-indent-global-mode t)
 
 (defun flymake-display-warning (warning) 
   "Display a warning to the user, using lwarn"
