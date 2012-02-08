@@ -195,7 +195,7 @@ opening parenthesis one level up."
 (setq x-stretch-cursor t)
 
 ;; show tabs as ^I
-(standard-display-ascii ?\t "^I")
+(standard-display-ascii ?\t "^I  ")
 
 ;; indent by default 
 (global-set-key (kbd "RET") 'newline-and-indent)
