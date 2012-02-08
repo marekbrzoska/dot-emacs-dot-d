@@ -213,7 +213,7 @@ opening parenthesis one level up."
   (delete-other-windows)
   )
 ;; open buffer explorer with C-x C-,
-(global-set-key (kbd "C-x C-,")
+(global-set-key (kbd "C-c C-n")
                 'mbr-open-buffer
                 )
 
@@ -230,7 +230,3 @@ opening parenthesis one level up."
 (setq mumamo-background-colors nil) 
 (add-to-list 'auto-mode-alist '("\\.html$" . django-html-mumamo-mode))
 (setq django-indent-width 4)
-
-
-
-
