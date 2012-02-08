@@ -221,3 +221,7 @@ opening parenthesis one level up."
 (global-set-key (kbd "C-x C-,")
                 'mbr-open-buffer
                 )
+
+;; vim-like switch to previous buffer
+(global-set-key (kbd "C-^")
+                'switch-to-buffer)
