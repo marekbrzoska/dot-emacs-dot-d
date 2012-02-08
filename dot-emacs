@@ -103,13 +103,13 @@ opening parenthesis one level up."
   "Copy previous line character by character"
   (interactive)
   (let ((curpoint (point))
-	(curcolumn (current-column)))
+    (curcolumn (current-column)))
     (forward-line -1)
     (forward-char curcolumn)
     (let ((char-above (following-char) ))
       (goto-char curpoint)
       (if (not (char-equal char-above ?\n ))
-	  (insert char-above)))))
+      (insert char-above)))))
 (global-set-key (kbd "C-S-y") 'insert-char-from-previous-line)
 
 ;; Original idea from
@@ -140,7 +140,7 @@ opening parenthesis one level up."
 ;; fajniejszy status bar
 (setq mode-line-system-identification  
       (substring (system-name) 0
-		 (string-match "\\..+" (system-name))))
+         (string-match "\\..+" (system-name))))
 (setq default-mode-line-format
       (list ""
             'mode-line-modified
@@ -157,7 +157,7 @@ opening parenthesis one level up."
             "%n" 
             'mode-line-process  
             ")%]--" 
-	    "Line %l--"
+        "Line %l--"
             '(-3 . "%P")
             "-%-"))
 ;; Start with new default.
@@ -211,11 +211,20 @@ opening parenthesis one level up."
   (list-buffers)
   (other-window 1)
   (delete-other-windows)
+  ;; (next-line)
   )
 ;; open buffer explorer with C-x C-,
-(global-set-key (kbd "C-c C-n")
+;; (keyboard-translate ?\C-m ?\H-m)
+(global-set-key (kbd "<C-tab>")
                 'mbr-open-buffer
                 )
+(defun mbr-buffer-menu-hook () ""
+  (progn
+    (local-set-key (kbd "<C-tab>") 'next-line)
+    (local-set-key (kbd "<C-S-tab>") 'previous-line)
+    )
+  )
+(add-hook 'buffer-menu-mode-hook 'mbr-buffer-menu-hook)
 
 ;; vim-like switch to previous buffer
 (global-set-key (kbd "C-^")
