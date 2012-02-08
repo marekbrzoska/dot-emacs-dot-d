@@ -220,3 +220,17 @@ opening parenthesis one level up."
 ;; vim-like switch to previous buffer
 (global-set-key (kbd "C-^")
                 'switch-to-buffer)
+
+
+
+;; for django templates
+(autoload 'django-html-mumamo-mode "~/.emacs.d/nxhtml/autostart.el")
+(setq auto-mode-alist
+      (append '(("\\.html?$" . django-html-mumamo-mode)) auto-mode-alist))
+(setq mumamo-background-colors nil) 
+(add-to-list 'auto-mode-alist '("\\.html$" . django-html-mumamo-mode))
+(setq django-indent-width 4)
+
+
+
+
