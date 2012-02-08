@@ -68,16 +68,16 @@ opening parenthesis one level up."
                   ))))))
 (global-set-key [?\C-%] 'goto-match-paren)
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(inhibit-startup-screen t))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  )
 
 
@@ -98,17 +98,17 @@ opening parenthesis one level up."
 
 
 ;; copy from line above
- (defun insert-char-from-previous-line ()
-   "Copy previous line character by character"
-   (interactive)
-   (let ((curpoint (point))
-    (curcolumn (current-column)))
-      (forward-line -1)
-      (forward-char curcolumn)
-      (let ((char-above (following-char) ))
+(defun insert-char-from-previous-line ()
+  "Copy previous line character by character"
+  (interactive)
+  (let ((curpoint (point))
+	(curcolumn (current-column)))
+    (forward-line -1)
+    (forward-char curcolumn)
+    (let ((char-above (following-char) ))
       (goto-char curpoint)
       (if (not (char-equal char-above ?\n ))
-     (insert char-above)))))
+	  (insert char-above)))))
 (global-set-key (kbd "C-S-y") 'insert-char-from-previous-line)
 
 ;; Original idea from
@@ -118,11 +118,11 @@ opening parenthesis one level up."
   If no region is selected and current line is not blank and we are not at the end of the line,
   then comment current line.
   Replaces default behaviour of comment-dwim, when it inserts comment at the end of the line."
-    (interactive "*P")
-    (comment-normalize-vars)
-    (if (and (not (region-active-p)) (not (looking-at "[ \t]*$")))
-        (comment-or-uncomment-region (line-beginning-position) (line-end-position))
-      (comment-dwim arg)))
+  (interactive "*P")
+  (comment-normalize-vars)
+  (if (and (not (region-active-p)) (not (looking-at "[ \t]*$")))
+      (comment-or-uncomment-region (line-beginning-position) (line-end-position))
+    (comment-dwim arg)))
 (global-set-key "\M-;" 'comment-dwim-line)
 (setq comment-empty-lines 1)
 
@@ -138,8 +138,8 @@ opening parenthesis one level up."
 
 ;; fajniejszy status bar
 (setq mode-line-system-identification  
-  (substring (system-name) 0
-             (string-match "\\..+" (system-name))))
+      (substring (system-name) 0
+		 (string-match "\\..+" (system-name))))
 (setq default-mode-line-format
       (list ""
             'mode-line-modified
@@ -156,7 +156,7 @@ opening parenthesis one level up."
             "%n" 
             'mode-line-process  
             ")%]--" 
-             "Line %l--"
+	    "Line %l--"
             '(-3 . "%P")
             "-%-"))
 ;; Start with new default.
@@ -166,7 +166,7 @@ opening parenthesis one level up."
 
 (defun set-python-env () ""
   (load "mbr-python")
-)
+  )
 (add-hook 'python-mode-hook 'set-python-env)
 
 
@@ -180,7 +180,6 @@ opening parenthesis one level up."
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
 
 ;; auto indent mode config
-(setq auto-indent-on-visit-file t) ;; If you want auto-indent on for files
 (setq auto-indent-key-for-end-of-line-then-newline "<M-return>")
 (require 'auto-indent-mode)
 (auto-indent-global-mode)
