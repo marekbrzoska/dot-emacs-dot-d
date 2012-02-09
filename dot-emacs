@@ -239,3 +239,7 @@ opening parenthesis one level up."
 (setq mumamo-background-colors nil) 
 (add-to-list 'auto-mode-alist '("\\.html$" . django-html-mumamo-mode))
 (setq django-indent-width 4)
+
+;; for inserting after and befor rect
+(setq cua-enable-cua-keys nil)
+(cua-mode)
